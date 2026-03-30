@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Stage 1 - Hello') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'github-credentials',
+                    usernameVariable: 'GIT_USER',
+                    passwordVariable: 'GIT_TOKEN'
+                )]) {
+                    sh 'chmod +x scripts/stage1.sh && ./scripts/stage1.sh'
+                }
+            }
+        }
+        stage('Stage 2 - Hello') {
+            steps {
+                sh 'chmod +x scripts/stage2.sh && ./scripts/stage2.sh'
+            }
+        }
+    }
+}
